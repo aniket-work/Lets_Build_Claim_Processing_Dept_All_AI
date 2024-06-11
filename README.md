@@ -41,5 +41,10 @@
      ```plaintext
      GROQ_API_KEY=<YOUR_KEY>
      ```
+     
+4. Run Streamlit app
+    ```python
+    streamlit run dashboard.py
+    ```
 
-
+5.

@@ -14,7 +14,7 @@ from unstructured.staging.base import dict_to_elements, elements_to_json
 from unstructured.partition.pdf import partition_pdf
 
 # Specify the path to your PDF file
-filename = "claims/gpt4all.pdf"
+filename = "claims/Aniket_Home_Company_Invoice.pdf"
 
 # Call the partition_pdf function
 # Returns a List[Element] present in the pages of the parsed pdf document
@@ -38,7 +38,7 @@ from dotenv import load_dotenv, find_dotenv
 # Load the .env file
 load_dotenv(find_dotenv())
 
-free_api_key_auth = os.environ.get('free_api_key_auth')
+free_api_key_auth = os.environ.get('free_api_key')
 
 client = UnstructuredClient(
     api_key_auth=free_api_key_auth
@@ -64,6 +64,48 @@ try:
 except SDKError as e:
     print(e)
 
+
+
 tables = [el for el in elements if el.category == "Table"]
+table_html = tables[0].metadata.text_as_html
+
+print(tables[0].text)
+
+
+from io import StringIO
+from lxml import etree
+
+parser = etree.XMLParser(remove_blank_text=True)
+file_obj = StringIO(table_html)
+tree = etree.parse(file_obj, parser)
+print(etree.tostring(tree, pretty_print=True).decode())
+
+from IPython.core.display import HTML
+HTML(table_html)
+
+from langchain_community.chat_models import ChatOllama
+from langchain_core.documents import Document
+from langchain.chains.summarize import load_summarize_chain
+
+llm = ChatOllama(model="llama3")
+chain = load_summarize_chain(llm, chain_type="stuff")
+output = chain.invoke([Document(page_content=table_html)])
+
+print(output['output_text'])
+
+import pandas as pd
+
+# Convert HTML table to pandas DataFrame
+dfs = pd.read_html(table_html)
+
+# Assuming there's only one table, get the DataFrame
+df = dfs[0]
+
+# Now you have the DataFrame
+print(df)
+
+print(df.head())
+
+
 
 
