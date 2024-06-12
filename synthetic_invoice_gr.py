@@ -2,16 +2,53 @@ from fpdf import FPDF
 
 
 class PDF(FPDF):
+    """
+    A class to represent a PDF document for Aniket Home Company invoices.
+
+    Methods
+    -------
+    header():
+        Sets the header of each page in the PDF.
+
+    footer():
+        Sets the footer of each page in the PDF.
+
+    invoice_body(invoice_data, items, totals):
+        Adds the body of the invoice to the PDF, including the invoice details, items, and totals.
+    """
+
     def header(self):
+        """
+        Sets the header of each page in the PDF document. The header includes the title of the document.
+        """
         self.set_font('Arial', 'B', 12)
         self.cell(0, 10, 'Aniket Home Company Invoice', 0, 1, 'C')
 
     def footer(self):
+        """
+        Sets the footer of each page in the PDF document. The footer includes the current page number.
+        """
         self.set_y(-15)
         self.set_font('Arial', 'I', 8)
         self.cell(0, 10, f'Page {self.page_no()}', 0, 0, 'C')
 
     def invoice_body(self, invoice_data, items, totals):
+        """
+        Adds the body of the invoice to the PDF document. This includes the invoice details,
+        items purchased, and totals.
+
+        Parameters
+        ----------
+        invoice_data : list
+            A list of strings containing the invoice header information.
+
+        items : list of dict
+            A list of dictionaries, each containing the description, quantity, unit price,
+            and total for an item.
+
+        totals : dict
+            A dictionary containing the subtotal, tax, and total amounts.
+        """
         self.set_font('Arial', '', 12)
 
         for line in invoice_data:
@@ -52,7 +89,14 @@ class PDF(FPDF):
         self.multi_cell(0, 10,
                         'Payment is due within 30 days from the date of the invoice. Late payments may incur additional fees.')
 
+
 def main():
+    """
+    Main function to generate the PDF invoice.
+
+    This function initializes the PDF, adds a page, populates the invoice data, items, and totals,
+    and outputs the PDF to a file.
+    """
     pdf = PDF()
     pdf.add_page()
 
@@ -92,5 +136,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

@@ -4,7 +4,6 @@ import os
 from pandasai.llm.local_llm import LocalLLM
 from langchain_groq.chat_models import ChatGroq
 from dotenv import load_dotenv
-import streamlit as st
 import pandas as pd
 from pandasai import Agent
 import main
@@ -17,12 +16,23 @@ if not os.path.exists("claims"):
 
 load_dotenv()
 
+
 def save_uploaded_file(uploaded_file):
+    """
+    Save an uploaded file to the 'claims' directory.
+
+    Parameters:
+    uploaded_file (UploadedFile): The file uploaded by the user.
+
+    Returns:
+    None
+    """
     with open(os.path.join("claims", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
-    return st.success(f"Saved file: {uploaded_file.name}")
+    return st.success(f"Submitted Claim For : {uploaded_file.name}")
 
 
+# Set the title and subtitle for the Streamlit app
 st.title("🛡️ Aniket Insurance Company Inc.")
 st.markdown(
     """
@@ -33,7 +43,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Create tabs
+# Create tabs for different functionalities
 tab1, tab2, tab3 = st.tabs(["Submit Claim", "Process Claim", "Claim Analysis"])
 
 with tab1:
@@ -51,15 +61,18 @@ with tab2:
         main.process_claim()
         st.success('Claim Has Been Processed.')
 
+# Display an image with a caption
 st.image("img/aniket_imginary_insurance.jpg", caption="Aniket Imaginary Insurance")
 
 with tab3:
     st.header("Claim Analysis")
     st.write("Start Analyzing all claims.")
+
     model = ChatGroq(
         api_key=os.getenv("GROQ_API_KEY"),
         model="llama3-70b-8192"
     )
+
     data = pd.read_csv('claims_db/db.csv')
     agent = Agent(data, config={"llm": model})
     prompt = st.text_input("What Analysis you like to run :")
@@ -74,12 +87,12 @@ with tab3:
                 else:
                     st.write(response)
 
-
 # Add a footer with expander sections
 st.markdown("---")
 
 with st.expander("About Us"):
-    st.write("Aniket Insurance Company Inc. is committed to providing excellent insurance services tailored to your needs. Our mission is to ensure your peace of mind through comprehensive coverage and exceptional customer service.")
+    st.write(
+        "Aniket Insurance Company Inc. is committed to providing excellent insurance services tailored to your needs. Our mission is to ensure your peace of mind through comprehensive coverage and exceptional customer service.")
 
 with st.expander("Contact Us"):
     st.write("""
@@ -89,4 +102,5 @@ with st.expander("Contact Us"):
     """)
 
 with st.expander("Policies"):
-    st.write("Our policies are designed to offer maximum protection and benefits to our customers. For more details, please visit our website or contact our support team.")
+    st.write(
+        "Our policies are designed to offer maximum protection and benefits to our customers. For more details, please visit our website or contact our support team.")
