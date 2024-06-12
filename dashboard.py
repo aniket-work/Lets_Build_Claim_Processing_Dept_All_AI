@@ -49,7 +49,7 @@ with tab2:
     st.write("This is where you can process claims.")
     if st.button('Process'):
         main.process_claim()
-        st.success('DataFrame has been written to claims_db/db.csv')
+        st.success('Claim Has Been Processed.')
 
 st.image("img/aniket_imginary_insurance.jpg", caption="Aniket Imaginary Insurance")
 

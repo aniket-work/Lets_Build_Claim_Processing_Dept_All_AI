@@ -81,5 +81,5 @@ def process_claim():
 
         # Convert the DataFrame to CSV
         DataFrameToCSVConverter.to_csv(df, 'claims_db/db.csv')
-        st.success('DataFrame has been written to claims_db/db.csv')
+        st.success('Claim Processing Has Been Submitted.')
 
