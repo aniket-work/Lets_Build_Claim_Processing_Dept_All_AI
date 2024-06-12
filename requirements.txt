@@ -8,3 +8,6 @@ langchain_community
 streamlit
 fpdf
 pandas
+pandasai
+langchain-groq==0.1.4
+langchain-groq

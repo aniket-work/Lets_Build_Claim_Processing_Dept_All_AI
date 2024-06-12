@@ -1,4 +1,7 @@
 import warnings
+
+from utils import DataFrameToCSVConverter
+
 warnings.filterwarnings('ignore')
 from IPython.display import JSON
 
@@ -105,6 +108,12 @@ df = dfs[0]
 print(df)
 
 print(df.head())
+
+# Create an instance of the converter
+converter = DataFrameToCSVConverter(df)
+
+# Convert the DataFrame to CSV
+converter.to_csv('claims_db/db.csv')
 
 
 

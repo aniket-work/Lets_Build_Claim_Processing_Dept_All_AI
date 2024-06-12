@@ -47,4 +47,7 @@
     streamlit run dashboard.py
     ```
 
-5.
+5. Run Analysis 
+    ```text
+    draw graph of descriptons items to total price
+    ```
