@@ -49,5 +49,5 @@
 
 5. Run Analysis 
     ```text
-    draw graph of descriptons items to total price
+    draw graph of descriptions items to total price
     ```

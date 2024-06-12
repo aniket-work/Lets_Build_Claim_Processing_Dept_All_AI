@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 from pandasai import Agent
+import main
+
+from utils import DataFrameToCSVConverter
 
 # Create the "claims" directory if it doesn't exist
 if not os.path.exists("claims"):
@@ -44,6 +47,9 @@ with tab1:
 with tab2:
     st.header("Process Claim")
     st.write("This is where you can process claims.")
+    if st.button('Process'):
+        main.process_claim()
+        st.success('DataFrame has been written to claims_db/db.csv')
 
 st.image("img/aniket_imginary_insurance.jpg", caption="Aniket Imaginary Insurance")
 

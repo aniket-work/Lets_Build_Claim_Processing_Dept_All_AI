@@ -20,3 +20,16 @@ class DataFrameToCSVConverter:
         print(f"DataFrame has been written to {file_name}")
 
 
+class DataFrameToCSVConverter:
+    @staticmethod
+    def to_csv(dataframe, file_name):
+        """
+        Convert the DataFrame to a CSV file.
+
+        :param dataframe: pandas DataFrame to be converted to CSV.
+        :param file_name: Name of the CSV file to be created.
+        """
+        dataframe.to_csv(file_name, index=False)
+        print(f"DataFrame has been written to {file_name}")
+
+
